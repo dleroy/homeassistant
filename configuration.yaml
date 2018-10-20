@@ -58,10 +58,14 @@ sun:
 sensor:
   - platform: yr
 
-# Text to speech
-tts:
-  - platform: google
+# ISY994
+isy994:
+  host: !secret isy994_hostname
+  username: !secret isy994_username
+  password: !secret isy994_password
+  enable_climate: false
 
+  
 # Cloud
 cloud:
 
