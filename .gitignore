@@ -4,3 +4,4 @@ home-assistant.log
 deps/*
 tts/*
 .cloud/*
+.storage/*
