@@ -68,6 +68,40 @@ isy994:
   
 # Cloud
 cloud:
+  alexa:
+    filter:
+      include_entities:
+        - switch.boyslights
+        - switch.dinner_scene
+        - switch.frontdoor_motion
+        - switch.manual_sprinklers
+        - switch.1stlivingroomdraperelay
+        - media_player.xbr75x850c
+      include_domains:
+        - switch
+      exclude_domains:
+        - light
+    entity_config:
+      switch.boyslights:
+        name: boys lights
+        description: All the boys lights
+        display_categories: LIGHT
+      switch.1stlivingroomdraperelay:
+        name: drapes
+        description: Open/Close Drapes in Living room
+        display_categories: SWITCH
+      switch.dinner_scene:
+        name: dinner scene
+        description: Lighting for dinner time
+        display_categories: SCENE_TRIGGER
+      switch.frontdoor_motion:
+        name: frontdoor motion
+        description: Control turning on/off front door voice notification
+        display_categories: SWITCH
+      switch.manual_sprinklers:
+        name: sprinklers
+        description: Control turning on/off 3 sprinkler zones (manual run)
+        display_categories: SWITCH
 
 group: !include groups.yaml
 automation: !include automations.yaml
