@@ -66,7 +66,10 @@ isy994:
   enable_climate: false
 
   
-# Cloud
+# This utilizes the homeassistant cloud (https://www.nabucasa.com)
+# Currently we are utilizing this for Alexa integration. You can
+# also integrate with Amazon Alexa directly giving much more flexibility
+# That integration is documented here: https://www.home-assistant.io/components/alexa/
 cloud:
   alexa:
     filter:
@@ -82,7 +85,6 @@ cloud:
 #        - switch
       exclude_domains:
         - light
-        - switch
     entity_config:
       switch.boyslights:
         name: boys lights
