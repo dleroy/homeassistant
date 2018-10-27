@@ -76,11 +76,13 @@ cloud:
         - switch.frontdoor_motion
         - switch.manual_sprinklers
         - switch.1stlivingroomdraperelay
+        - switch.b__fmly_btn_upstairs_off
         - media_player.xbr75x850c
-      include_domains:
-        - switch
+#      include_domains:
+#        - switch
       exclude_domains:
         - light
+        - switch
     entity_config:
       switch.boyslights:
         name: boys lights
@@ -102,6 +104,10 @@ cloud:
         name: sprinklers
         description: Control turning on/off 3 sprinkler zones (manual run)
         display_categories: SWITCH
+      switch.b__fmly_btn_upstairs_off:
+        name: upstairs 
+        description: Upstairs lights
+        display_categories: LIGHT
 
 group: !include groups.yaml
 automation: !include automations.yaml
