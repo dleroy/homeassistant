@@ -65,6 +65,12 @@ isy994:
   password: !secret isy994_password
   enable_climate: false
 
+# Garage doors
+cover:
+  - platform: myq
+    username: !secret myq_username
+    password: !secret myq_password
+    type: liftmaster
   
 # This utilizes the homeassistant cloud (https://www.nabucasa.com)
 # Currently we are utilizing this for Alexa integration. You can
