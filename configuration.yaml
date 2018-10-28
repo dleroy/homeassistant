@@ -71,6 +71,15 @@ cover:
     username: !secret myq_username
     password: !secret myq_password
     type: liftmaster
+
+# Nest Thermometer
+nest:
+  client_id: !secret nest_clientid 
+  client_secret: !secret nest_secret
+
+# Ecobee Thermometer
+ecobee:
+  api_key: xLINNMohBdXxSI9JciRZXhQwaOobIZpT
   
 # This utilizes the homeassistant cloud (https://www.nabucasa.com)
 # Currently we are utilizing this for Alexa integration. You can
