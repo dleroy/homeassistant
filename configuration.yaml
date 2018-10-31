@@ -62,7 +62,33 @@ nest:
 
 # Ecobee Thermometer
 ecobee:
-  api_key: xLINNMohBdXxSI9JciRZXhQwaOobIZpT
+  api_key: !secret ecobee_api_key 
+
+# Support for Arlo Netgear cameras. First add generic component then camera config.
+#arlo:
+#  username: !secret arlo_username
+#  password: !secret arlo_password
+
+#alarm_control_panel:
+#  - platform: arlo
+#    home_mode_name: "Disarmed"
+#    away_mode_name: "Armed"
+
+#sensor:
+#  - platform: arlo
+#    monitored_conditions:
+#      - captured_today
+#      - last_capture
+#      - total_cameras
+#      - battery_level
+#      - signal_strength
+
+# Arlo requires ffmpeg
+#ffmpeg:
+
+#camera:
+#  - platform: arlo
+#    ffmpeg_arguments: '-pred 1 -q:v 2'
   
 # This utilizes the homeassistant cloud (https://www.nabucasa.com)
 # Currently we are utilizing this for Alexa integration. You can

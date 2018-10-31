@@ -1,0 +1,114 @@
+#################################################################
+## Groups
+#################################################################
+
+  default_view:
+    view: yes
+    name: home
+#    icon: mdi:home-assistant
+    entities:
+      - group.garage
+      - group.irrigation
+      - group.thermostats
+
+  Climate:
+    name: Climate
+    view: yes
+#    icon: mdi:weather-cloudy
+    entities:
+      - group.thermostats
+
+#  Cameras:
+#    name: Cameras
+#    view: yes
+#    icon: mdi:cctv
+#    entities:
+#      - group.cameras_info
+#      - group.arlo_cameras
+
+# Group Definitions
+  garage:
+    - cover.dave_door
+    - cover.heather_door
+    - cover.side_door
+
+  irrigation:
+    - switch.manual_sprinklers
+
+  thermostats:
+    - sensor.main_floor_temperature
+    - sensor.upstairs_thermostat_temperature
+    - sensor.ryans_bedroom_temperature
+    - sensor.kevins_bedroom_temperature
+    - sensor.parent_bedroom_temperature
+
+#  arlo_cameras:
+#    - camera.front_porch
+#    - sensor.last_capture_front_porch
+#    - sensor.captured_today_front_porch
+#    - sensor.battery_level_front_porch
+#    - sensor.signal_strength_front_porch
+#    - camera.backyard
+#    - sensor.last_capture_backyard
+#    - sensor.captured_today_backyard
+#    - sensor.battery_level_backyard
+#    - sensor.signal_strength_backyard
+#    - camera.garage_side
+#    - sensor.last_capture_garage_side
+#    - sensor.captured_today_garage_side
+#    - sensor.battery_level_garage_side
+#    - sensor.signal_strength_garage_side
+#    - camera.shed_side
+#    - sensor.last_capture_shed_side
+#    - sensor.captured_today_shed_side
+#    - sensor.battery_level_shed_side
+#    - sensor.signal_strength_shed_side
+
+#  cameras_info:
+#    name: Arlo Status
+#    entities:
+#      - alarm_control_panel.chiquita
+#      - sensor.captured_today
+
+
+#climate.upstairs
+#binary_sensor.front_porch_motionlow_bat:
+#binary_sensor.front_porch_motionsensor:
+#binary_sensor.front_porch_motionduskdawn:
+#binary_sensor.1stlivingroomdrapesensor:
+#switch.kitchen_master_btn:
+#switch.nook_master_btn:
+#switch.a__nook_btn_under_desk:
+#switch.c__fmly_btn_cans:
+#switch.c__nook_btn_center_fixture:
+#switch.garage_eave_outlet_top:
+#switch.1stgaragefrontflourescant:
+#switch.garage_eave_outlet_bottom:
+#switch.1stgaragefrontflourescant_2:
+#switch.garageoutletunused:
+#switch.dining_room3way:
+#switch.garageoutletlandscapelight:
+#switch.garage_flouro_3way:
+#switch.1stgaragebackflourescant:
+#switch.boyslights:
+#switch.1stlivingroomdraperelay:
+#switch.kevin_bedroom:
+#switch.1stsecretroomoutlettop:
+#switch.ryans_bedroom:
+#switch.1stsecretroomoutletbottom:
+#switch.auto_dr:
+#switch.1stkevinoutlettop:
+#switch.manual_sprinklers:
+#switch.1stkevinoutletbottom:
+#switch.c__ktchn_btn_under_cabinet:
+#switch.d__fmly_btn_stairwell_light:
+#switch.upstairs_downstairs_off:
+#switch.a__fmly_btn_chandelier:
+#switch.a__ktchn_btn_upper_cabinet:
+#switch.d__ktchn_btn_island:
+#switch.fmly_master_btn:
+#switch.upstairs_off:
+#light.1stboysbathsconces:
+#light.1stfrontporchhanginglight:
+#light.1stlivingroomcans:
+ 
