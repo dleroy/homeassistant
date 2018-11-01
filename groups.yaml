@@ -18,6 +18,22 @@
     entities:
       - group.thermostats
 
+  Lights:
+    name: Lights
+    view: yes
+    entities:
+       - group.outside_lights
+ #     - group.upstairs-lights
+       - group.bedrooms_lights
+ #     - group.family-lights
+ #     - group.kitchen-lights
+
+  Energy:
+    name: Energy
+    view: yes
+    entities:
+      - group.thermostats
+
 #  Cameras:
 #    name: Cameras
 #    view: yes
@@ -41,6 +57,20 @@
     - sensor.ryans_bedroom_temperature
     - sensor.kevins_bedroom_temperature
     - sensor.parent_bedroom_temperature
+
+  outside lights:
+    - light.1stfrontgaragesconces
+    - light.1stfrontporchcanlights
+    - light.1stfrontporchhanginglight
+
+  bedrooms lights:
+    - light.1stboysbathsconces
+    - light.1stboysbathtoiletcan
+    - light.1stboyshallwaycans
+    - light.1stkevincans
+    - light.1stkevincenterfixture
+    - light.1stryancans
+    - light.1stryancenterfixture
 
 #  arlo_cameras:
 #    - camera.front_porch
@@ -71,44 +101,3 @@
 #      - sensor.captured_today
 
 
-#climate.upstairs
-#binary_sensor.front_porch_motionlow_bat:
-#binary_sensor.front_porch_motionsensor:
-#binary_sensor.front_porch_motionduskdawn:
-#binary_sensor.1stlivingroomdrapesensor:
-#switch.kitchen_master_btn:
-#switch.nook_master_btn:
-#switch.a__nook_btn_under_desk:
-#switch.c__fmly_btn_cans:
-#switch.c__nook_btn_center_fixture:
-#switch.garage_eave_outlet_top:
-#switch.1stgaragefrontflourescant:
-#switch.garage_eave_outlet_bottom:
-#switch.1stgaragefrontflourescant_2:
-#switch.garageoutletunused:
-#switch.dining_room3way:
-#switch.garageoutletlandscapelight:
-#switch.garage_flouro_3way:
-#switch.1stgaragebackflourescant:
-#switch.boyslights:
-#switch.1stlivingroomdraperelay:
-#switch.kevin_bedroom:
-#switch.1stsecretroomoutlettop:
-#switch.ryans_bedroom:
-#switch.1stsecretroomoutletbottom:
-#switch.auto_dr:
-#switch.1stkevinoutlettop:
-#switch.manual_sprinklers:
-#switch.1stkevinoutletbottom:
-#switch.c__ktchn_btn_under_cabinet:
-#switch.d__fmly_btn_stairwell_light:
-#switch.upstairs_downstairs_off:
-#switch.a__fmly_btn_chandelier:
-#switch.a__ktchn_btn_upper_cabinet:
-#switch.d__ktchn_btn_island:
-#switch.fmly_master_btn:
-#switch.upstairs_off:
-#light.1stboysbathsconces:
-#light.1stfrontporchhanginglight:
-#light.1stlivingroomcans:
- 
