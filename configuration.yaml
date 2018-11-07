@@ -14,6 +14,12 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+# Logger configuration
+logger:
+  default: info
+  logs:
+    homeassistant.components.isy994: debug
+    
 # Enables the frontend
 frontend:
 
@@ -47,6 +53,7 @@ isy994:
   host: !secret isy994_hostname
   username: !secret isy994_username
   password: !secret isy994_password
+#  enable_emeter: True   # add once supported
 
 # Garage doors
 cover:
@@ -104,6 +111,9 @@ cloud:
         - switch.manual_sprinklers
         - switch.1stlivingroomdraperelay
         - switch.b__fmly_btn_upstairs_off
+        - switch.fmly_master_btn
+        - switch.nook_master_btn
+        - switch.kitchen_master_btn
         - media_player.xbr75x850c
 #      include_domains:
 #        - switch
@@ -134,6 +144,18 @@ cloud:
         name: upstairs 
         description: Upstairs lights
         display_categories: LIGHT
+      switch.fmly_master_btn:
+        name: family room
+        description: Family room lights
+        display_categories: SWITCH
+      switch.nook_master_btn:
+        name: nook
+        description: Nook lights
+        display_categories: SWITCH
+      switch.kitchen_master_btn:
+        name: kitchen
+        description: Kitchen lights
+        display_categories: SWITCH
 
 group: !include groups.yaml
 automation: !include automations.yaml
