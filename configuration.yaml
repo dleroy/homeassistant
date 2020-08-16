@@ -1,59 +1,21 @@
-homeassistant:
-  # Name of the location where Home Assistant is running
-  name: La Chiquita
-  # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude_home
-  longitude: !secret longitude_home
-  elevation: 63
-# metric for Metric, imperial for Imperial
-  unit_system: imperial
-   # C for Celcius, F for Fahrenheit
-  temperature_unit: F
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: America/Los_Angeles
-  # Customization file
-  customize: !include customize.yaml
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
 
-# Logger configuration
 logger:
   default: info
   logs:
-    homeassistant.components.isy994: debug
-    
-# Enables the frontend
+    custom_components.aarlo: debug
+    custom_components.aarlo.camera: debug
+    pyaarlo: debug
+
 frontend:
-
-# Enables configuration UI
-config:
-
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
-
-# Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
-
-# Enables support for tracking state changes over time
-history:
-
-# View all events in a logbook
-logbook:
-
-# Enables a map showing the location of tracked devices
-map:
+  themes: !include themes.yaml
 
 # ISY994
 isy994:
   host: !secret isy994_hostname
   username: !secret isy994_username
   password: !secret isy994_password
-#  enable_emeter: True
 
 # Garage doors
 cover:
@@ -62,41 +24,26 @@ cover:
     password: !secret myq_password
     type: liftmaster
 
-# Nest Thermometer
-nest:
-  client_id: !secret nest_clientid 
-  client_secret: !secret nest_secret
-
 # Ecobee Thermometer
 ecobee:
   api_key: !secret ecobee_api_key 
 
-# Support for Arlo Netgear cameras. First add generic component then camera config.
-#arlo:
-#  username: !secret arlo_username
-#  password: !secret arlo_password
+# Arlo Cameras
+aarlo:
+  username: !secret arlo_username
+  password: !secret arlo_password
+  refresh_devices_every: 2
+  stream_timeout: 60
+  reconnect_every: 90
 
-#alarm_control_panel:
-#  - platform: arlo
-#    home_mode_name: "Disarmed"
-#    away_mode_name: "Armed"
+camera:
+  - platform: aarlo
 
-#sensor:
-#  - platform: arlo
-#    monitored_conditions:
-#      - captured_today
-#      - last_capture
-#      - total_cameras
-#      - battery_level
-#      - signal_strength
+tts:
+  - platform: voicerss
+    api_key: !secret voicerss_api_key
+    format: 44khz_16bit_stereo
 
-# Arlo requires ffmpeg
-#ffmpeg:
-
-#camera:
-#  - platform: arlo
-#    ffmpeg_arguments: '-pred 1 -q:v 2'
-  
 # This utilizes the homeassistant cloud (https://www.nabucasa.com)
 # Currently we are utilizing this for Alexa integration. You can
 # also integrate with Amazon Alexa directly giving much more flexibility
@@ -110,15 +57,15 @@ cloud:
         - switch.frontdoor_motion
         - switch.manual_sprinklers
         - switch.1stlivingroomdraperelay
-        - switch.b__fmly_btn_upstairs_off
+        - switch.b_fmly_btn_upstairs_off
         - switch.fmly_master_btn
         - switch.nook_master_btn
         - switch.kitchen_master_btn
         - media_player.xbr75x850c
-#      include_domains:
-#        - switch
-      exclude_domains:
-        - light
+      include_domains:
+        - switch
+#      exclude_domains:
+#        - light
     entity_config:
       switch.boyslights:
         name: boys lights
@@ -140,7 +87,7 @@ cloud:
         name: sprinklers
         description: Control turning on/off 3 sprinkler zones (manual run)
         display_categories: SWITCH
-      switch.b__fmly_btn_upstairs_off:
+      switch.b_fmly_btn_upstairs_off:
         name: upstairs 
         description: Upstairs lights
         display_categories: LIGHT
@@ -161,6 +108,283 @@ cloud:
         description: Office lights
         display_categories: SWITCH
 
+# All the below is for the sprinkler integration
+input_datetime:
+  zone_garden_am_on_time:
+    name: AM On Time
+    has_date: false
+    has_time: true
+
+  zone_garden_pm_on_time:
+    name: PM On Time
+    has_date: false
+    has_time: true
+
+  zone_frontyard_am_on_time:
+    name: AM On Time
+    has_date: false
+    has_time: true
+
+  zone_frontyard_pm_on_time:
+    name: PM On Time
+    has_date: false
+    has_time: true
+
+  zone_backyard_am_on_time:
+    name: AM On Time
+    has_date: false
+    has_time: true
+
+  zone_backyard_pm_on_time:
+    name: PM On Time
+    has_date: false
+    has_time: true
+
+input_boolean:
+  zone_garden_mon:
+    name: Monday
+    icon: mdi:calendar
+
+  zone_garden_tue:
+    name: Tuesday
+    icon: mdi:calendar
+
+  zone_garden_wed:
+    name: Wednesday
+    icon: mdi:calendar
+
+  zone_garden_thu:
+    name: Thursday
+    icon: mdi:calendar
+
+  zone_garden_fri:
+    name: Friday
+    icon: mdi:calendar
+
+  zone_garden_sat:
+    name: Saturday
+    icon: mdi:calendar
+
+  zone_garden_sun:
+    name: Sunday
+    icon: mdi:calendar
+
+  zone_frontyard_mon:
+    name: Monday
+    icon: mdi:calendar
+
+  zone_frontyard_tue:
+    name: Tuesday
+    icon: mdi:calendar
+
+  zone_frontyard_wed:
+    name: Wednesday
+    icon: mdi:calendar
+
+  zone_frontyard_thu:
+    name: Thursday
+    icon: mdi:calendar
+
+  zone_frontyard_fri:
+    name: Friday
+    icon: mdi:calendar
+
+  zone_frontyard_sat:
+    name: Saturday
+    icon: mdi:calendar
+
+  zone_frontyard_sun:
+    name: Sunday
+    icon: mdi:calendar
+
+  zone_backyard_mon:
+    name: Monday
+    icon: mdi:calendar
+
+  zone_backyard_tue:
+    name: Tuesday
+    icon: mdi:calendar
+
+  zone_backyard_wed:
+    name: Wednesday
+    icon: mdi:calendar
+
+  zone_backyard_thu:
+    name: Thursday
+    icon: mdi:calendar
+
+  zone_backyard_fri:
+    name: Friday
+    icon: mdi:calendar
+
+  zone_backyard_sat:
+    name: Saturday
+    icon: mdi:calendar
+
+  zone_backyard_sun:
+    name: Sunday
+    icon: mdi:calendar
+
+  manual_sprinkler_switch:
+    initial: false
+    name: Manual Sprinkler Switch
+    icon: mdi:sprout
+
+input_number:
+  zone_garden_run_time:
+    name: Run Time
+    min: 5
+    max: 40
+    step: 5
+    unit_of_measurement: min
+    icon: mdi:clock
+  zone_frontyard_run_time:
+    name: Run Time
+    min: 5
+    max: 40
+    step: 5
+    unit_of_measurement: min
+    icon: mdi:clock
+  zone_backyard_run_time:
+    name: Run Time
+    min: 5
+    max: 40
+    step: 5
+    unit_of_measurement: min
+    icon: mdi:clock
+  manual_sprinkler_run_time:
+    name: Run Time
+    min: 5
+    max: 15
+    step: 1
+    unit_of_measurement: min
+    icon: mdi:clock
+
+binary_sensor:
+  - platform: template
+    sensors:
+      zone_backyard_day_active:
+        friendly_name: Irrigation Day Active
+        entity_id:
+          - sensor.date
+          - input_boolean.zone_backyard_mon
+          - input_boolean.zone_backyard_tue
+          - input_boolean.zone_backyard_wed
+          - input_boolean.zone_backyard_thu
+          - input_boolean.zone_backyard_fri
+          - input_boolean.zone_backyard_sat
+          - input_boolean.zone_backyard_sun
+        value_template: >-
+          {{ ( is_state('input_boolean.zone_backyard_mon', 'on') and now().weekday() == 0 )
+          or ( is_state('input_boolean.zone_backyard_tue', 'on') and now().weekday() == 1 )
+          or ( is_state('input_boolean.zone_backyard_wed', 'on') and now().weekday() == 2 )
+          or ( is_state('input_boolean.zone_backyard_thu', 'on') and now().weekday() == 3 )
+          or ( is_state('input_boolean.zone_backyard_fri', 'on') and now().weekday() == 4 )
+          or ( is_state('input_boolean.zone_backyard_sat', 'on') and now().weekday() == 5 )
+          or ( is_state('input_boolean.zone_backyard_sun', 'on') and now().weekday() == 6 ) }}    
+      zone_frontyard_day_active:
+        friendly_name: Irrigation Day Active
+        entity_id:
+          - sensor.date
+          - input_boolean.zone_frontyard_mon
+          - input_boolean.zone_frontyard_tue
+          - input_boolean.zone_frontyard_wed
+          - input_boolean.zone_frontyard_thu
+          - input_boolean.zone_frontyard_fri
+          - input_boolean.zone_frontyard_sat
+          - input_boolean.zone_frontyard_sun
+        value_template: >-
+          {{ ( is_state('input_boolean.zone_frontyard_mon', 'on') and now().weekday() == 0 )
+          or ( is_state('input_boolean.zone_frontyard_tue', 'on') and now().weekday() == 1 )
+          or ( is_state('input_boolean.zone_frontyard_wed', 'on') and now().weekday() == 2 )
+          or ( is_state('input_boolean.zone_frontyard_thu', 'on') and now().weekday() == 3 )
+          or ( is_state('input_boolean.zone_frontyard_fri', 'on') and now().weekday() == 4 )
+          or ( is_state('input_boolean.zone_frontyard_sat', 'on') and now().weekday() == 5 )
+          or ( is_state('input_boolean.zone_frontyard_sun', 'on') and now().weekday() == 6 ) }}
+      zone_garden_day_active:
+        friendly_name: Irrigation Day Active
+        entity_id:
+          - sensor.date
+          - input_boolean.zone_garden_mon
+          - input_boolean.zone_garden_tue
+          - input_boolean.zone_garden_wed
+          - input_boolean.zone_garden_thu
+          - input_boolean.zone_garden_fri
+          - input_boolean.zone_garden_sat
+          - input_boolean.zone_garden_sun
+        value_template: >-
+          {{ ( is_state('input_boolean.zone_garden_mon', 'on') and now().weekday() == 0 )
+          or ( is_state('input_boolean.zone_garden_tue', 'on') and now().weekday() == 1 )
+          or ( is_state('input_boolean.zone_garden_wed', 'on') and now().weekday() == 2 )
+          or ( is_state('input_boolean.zone_garden_thu', 'on') and now().weekday() == 3 )
+          or ( is_state('input_boolean.zone_garden_fri', 'on') and now().weekday() == 4 )
+          or ( is_state('input_boolean.zone_garden_sat', 'on') and now().weekday() == 5 )
+          or ( is_state('input_boolean.zone_garden_sun', 'on') and now().weekday() == 6 ) }}    
+
+sensor:
+# ISY994 PGE Energy tracker
+  - platform: command_line
+    name: Home Solar Production
+    command: "cat /config/solar.txt"
+    unit_of_measurement: "kW"
+
+# Sunpower solar energy tracker
+  - platform: command_line
+    name: Home Power Usage
+    command: "python3 /config/emeter.py"
+    unit_of_measurement: "kW"
+
+  - platform: template
+    sensors:
+      solar_power:
+        friendly_name: 'Solar Power Production'
+        unit_of_measurement: 'W'
+        value_template: >-
+          {{ (states("sensor.home_solar_production") | float) | int }}
+      grid_power_consumption:
+        friendly_name: 'Grid power consumption'
+        unit_of_measurement: 'W'
+        value_template: >-
+          {{ (states("sensor.home_power_usage") | float) | int }}
+
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+    
+  - platform: template
+    sensors:
+      zone_garden_time_remaining:
+        friendly_name: 'Time Remaining'
+        entity_id:
+          - input_number.zone_garden_time_remaining
+          - sensor.time
+          - switch.garden_sprinklers
+        value_template: "{{ [ (states('input_number.zone_garden_run_time') | int - (as_timestamp(now()) - as_timestamp(states.switch.garden_sprinklers.last_changed)) / 60) | round(0) ,0 ] | max }}"
+      zone_frontyard_time_remaining:
+        friendly_name: 'Time Remaining'
+        entity_id:
+          - input_number.zone_frontyard_time_remaining
+          - sensor.time
+          - switch.frontyard_sprinklers
+        value_template: "{{ [ (states('input_number.zone_frontyard_run_time') | int - (as_timestamp(now()) - as_timestamp(states.switch.frontyard_sprinklers.last_changed)) / 60) | round(0) ,0 ] | max }}"
+      zone_backyard_time_remaining:
+        friendly_name: 'Time Remaining'
+        entity_id:
+          - input_number.zone_backyard_time_remaining
+          - sensor.time
+          - switch.backyard_sprinklers
+        value_template: "{{ [ (states('input_number.zone_backyard_run_time') | int - (as_timestamp(now()) - as_timestamp(states.switch.backyard_sprinklers.last_changed)) / 60) | round(0) ,0 ] | max }}"
+
+switch:
+  - platform: command_line
+    switches:
+      somfy_drapes:
+        command_on: "python3 /config/drape_open.py 2> /config/command.log"
+        command_off: "python3 /config/drape_close.py 2> /config/command.log"
+        friendly_name: Living Room Drapes
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
+scene: !include scenes.yaml

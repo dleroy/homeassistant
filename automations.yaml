@@ -1,1 +1,280 @@
-[]
+- id: irrigation_zone_garden_am
+  alias: Irrigation Zone Garden AM
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.zone_garden_am_on_time'').rsplit('':'',1)[0]
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.zone_garden_day_active
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.garden_sprinklers
+- id: irrigation_zone_garden_pm
+  alias: Irrigation Zone Garden PM
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.zone_garden_pm_on_time'').rsplit('':'',1)[0]
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.zone_garden_day_active
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.garden_sprinklers
+- id: irrigation_zone_garden_off
+  alias: Irrigation Zone Garden Off
+  initial_state: true
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.zone_garden_time_remaining
+    below: 1
+  - platform: state
+    entity_id: switch.zone_garden_pm_on_time
+    to: 'on'
+    for:
+      minutes: 45
+  condition:
+  - condition: state
+    entity_id: switch.garden_sprinklers
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.garden_sprinklers
+- id: irrigation_zone_backyard_am
+  alias: Irrigation Zone Backyard AM
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.zone_backyard_am_on_time'').rsplit('':'',1)[0]
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.zone_backyard_day_active
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.backyard_sprinklers
+- id: irrigation_zone_backyard_pm
+  alias: Irrigation Zone Backyard PM
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.zone_backyard_pm_on_time'').rsplit('':'',1)[0]
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.zone_backyard_day_active
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.backyard_sprinklers
+- id: irrigation_zone_backyard_off
+  alias: Irrigation Zone Backyard Off
+  initial_state: true
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.zone_backyard_time_remaining
+    below: 1
+  - platform: state
+    entity_id: switch.zone_backyard_pm_on_time
+    to: 'on'
+    for:
+      minutes: 45
+  condition:
+  - condition: state
+    entity_id: switch.backyard_sprinklers
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.backyard_sprinklers
+- id: irrigation_zone_frontyard_am
+  alias: Irrigation Zone Frontyard AM
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.zone_frontyard_am_on_time'').rsplit('':'',1)[0]
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.zone_frontyard_day_active
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.frontyard_sprinklers
+- id: irrigation_zone_frontyard_pm
+  alias: Irrigation Zone Frontyard PM
+  trigger:
+    platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.zone_frontyard_pm_on_time'').rsplit('':'',1)[0]
+      }}'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.zone_frontyard_day_active
+    state: 'on'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.frontyard_sprinklers
+- id: irrigation_zone_frontyard_off
+  alias: Irrigation Zone Frontyard Off
+  initial_state: true
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.zone_frontyard_time_remaining
+    below: 1
+  - platform: state
+    entity_id: switch.zone_frontyard_pm_on_time
+    to: 'on'
+    for:
+      minutes: 45
+  condition:
+  - condition: state
+    entity_id: switch.frontyard_sprinklers
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    entity_id: switch.frontyard_sprinklers
+- id: Manual Sprinklers On
+  alias: manualy run sprinklers
+  description: manual sprinklers on, triggered from UI
+  trigger:
+  - entity_id: input_boolean.manual_sprinkler_switch
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+    service: script.start_manual_sprinkler_run
+- id: Manual Sprinklers off
+  alias: manualy turn off sprinklers
+  description: manual sprinklers off, triggered from UI
+  trigger:
+  - entity_id: input_boolean.manual_sprinkler_switch
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+    service: script.stop_manual_sprinkler_run
+- id: '1593027728193'
+  alias: Open Living Room Drapes
+  description: open drapes every morning
+  trigger:
+  - at: 07:10
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.somfy_drapes
+    service: switch.turn_on
+- id: '1593027825599'
+  alias: Close Living Room Drapes
+  description: close drapes every afternoon
+  trigger:
+  - at: '16:30'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.somfy_drapes
+    service: switch.turn_off
+- id: '1593028254357'
+  alias: Low Power Lights On
+  description: At Sunset turn on low power stairwell and bathroom lights
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.1stlowvoltagenight
+    service: light.turn_on
+- id: '1593028361122'
+  alias: Low Power Lights Off
+  description: At Sunrise turn off low power stairwell and bathroom light
+  trigger:
+  - event: sunrise
+    platform: sun
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.1stlowvoltagenight
+    service: light.turn_off
+- id: '1593796404130'
+  alias: Power cycle workbench outlet top
+  description: When outlet transitions to off, wait 10 seconds and then power back
+    on.
+  trigger:
+  - entity_id: switch.1stryanoutlettop
+    for: 00:00:10
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - device_id: 61e676e035914d6b828fc8c55bd12553
+    domain: switch
+    entity_id: switch.1stryanoutlettop
+    type: turn_on
+- id: '1593796539963'
+  alias: Power cycle workbench outlet bottom
+  description: When outlet is turned off, delay and turn back on
+  trigger:
+  - entity_id: switch.1stryanoutletbottom
+    for: 00:00:10
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - device_id: 61e676e035914d6b828fc8c55bd12553
+    domain: switch
+    entity_id: switch.1stryanoutletbottom
+    type: turn_on
+- id: '1593893878394'
+  alias: Camera Snapshot when Frontdoor Motion
+  description: Trigger a camera snapshot when frontdoor motion is detected
+  trigger:
+  - device_id: f7d1258dc07b4bd699949b5115dc389d
+    domain: binary_sensor
+    entity_id: binary_sensor.front_porch_motionsensor
+    platform: device
+    type: motion
+  condition: []
+  action:
+  - data: {}
+    entity_id: camera.aarlo_front_porch
+    service: aarlo.camera_request_snapshot
+- id: frontdoor motion speak
+  alias: Frontdoor motion speak
+  description: Notify when someone is at front door
+  trigger:
+  - device_id: f7d1258dc07b4bd699949b5115dc389d
+    domain: binary_sensor
+    entity_id: binary_sensor.front_porch_motionsensor
+    platform: device
+    type: motion
+  condition:
+  - after: 08:00:00
+    before: '20:00:00'
+    condition: time
+  action:
+  - data:
+      delay: 00:00:10
+      message: Comet, there is someone at the front door. Do not bark!
+      sonos_entity: media_player.kitchen
+      volume: 0.7
+    service: script.sonos_say
+- id: '1594519861518'
+  alias: 'Master Bedroom Closet Light off '
+  description: Toggle master closet bedroom light off after 5 minutes
+  trigger:
+  - platform: state
+    entity_id: light.1stmastercloset
+    to: 'on'
+    for:
+      minutes: 1
+  condition: []
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.1stmastercloset

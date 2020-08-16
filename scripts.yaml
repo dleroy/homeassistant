@@ -1,0 +1,69 @@
+start_manual_sprinkler_run:
+  alias: "Running sprinklers manually"
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.backyard_sprinklers
+    - delay:
+        minutes: "{{ states('input_number.manual_sprinkler_run_time') | int }}"
+    - service: switch.turn_off
+      data:
+        entity_id: switch.backyard_sprinklers
+    - service: switch.turn_on
+      data:
+        entity_id: switch.garden_sprinklers
+    - delay:
+        minutes: "{{ states('input_number.manual_sprinkler_run_time') | int }}"
+    - service: switch.turn_off
+      data:
+        entity_id: switch.garden_sprinklers
+    - service: switch.turn_on
+      data:
+        entity_id: switch.frontyard_sprinklers
+    - delay:
+        minutes: "{{ states('input_number.manual_sprinkler_run_time') | int }}"
+    - service: switch.turn_off
+      data:
+        entity_id: switch.frontyard_sprinklers
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.manual_sprinkler_switch
+
+stop_manual_sprinkler_run:
+  alias: "Turn off sprinklers manually"
+  sequence:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.backyard_sprinklers
+    - delay:
+        seconds: 2
+    - service: switch.turn_off
+      data:
+        entity_id: switch.garden_sprinklers
+    - delay:
+        seconds: 2
+    - service: switch.turn_off
+      data:
+        entity_id: switch.frontyard_sprinklers
+
+sonos_say:
+  alias: "Sonos TTS script"
+  sequence:
+    - service: sonos.snapshot
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+    - service: sonos.unjoin
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+        volume_level: "{{ volume }}"
+    - service: tts.voicerss_say
+      data_template:
+        entity_id: "{{ sonos_entity }}"
+        message: "{{ message }}"
+    - delay: "{{ delay }}"
+    - service: sonos.restore
+      data_template:
+        entity_id: "{{ sonos_entity }}"
